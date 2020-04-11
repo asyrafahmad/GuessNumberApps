@@ -12,6 +12,7 @@ import {
 
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/numberContainer';
 import Colors from '../constants/colors';
 
 
@@ -40,18 +41,25 @@ const StartGameScreen = props => {
                 'Number has to be a number between 1 and 99.',
                 [{text: 'Okay', style: 'destructive', onPress: resetInputHandler }]);
             return;
-        }0
+        } 
 
         setConfirmed(true);
         setSelectedNumber(chosenNumber);
         setEnteredValue('');
+        Keyboard.dismiss();
     }; 
 
     let confirmedOutput;
 
     //looks like validation
     if (confirmed){
-        confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>
+        confirmedOutput = (
+            <Card>
+                <Text>You selected</Text>
+                <NumberContainer>{selectedNumber}</NumberContainer>
+                <Button title="Start Game"></Button>
+            </Card>
+        );  
     }
 
     return (
@@ -65,10 +73,10 @@ const StartGameScreen = props => {
                 <Input 
                     style={styles.input}
                     blurOnSubmit
-                    autoCapitalize = "none"
-                    autoCorrect = {false} 
-                    keyboardType = "number-pad"
-                    maxLength= {2} 
+                    autoCapitalize="none"
+                    autoCorrect={false} 
+                    keyboardType="number-pad"
+                    maxLength={2} 
                     onChangetext={numberInputHandler}
                     value={enteredValue}
                 />
@@ -94,6 +102,7 @@ const StartGameScreen = props => {
         </TouchableWithoutFeedback>
     );
 };
+
 
  const styles = StyleSheet.create({
     screen: {
@@ -122,6 +131,10 @@ const StartGameScreen = props => {
     input: {
         width: 50,
         textAlign: 'center',
+    },
+    summaryContainer: {
+        marginTop: 20,
+        alignItems: 'center'
     }
 });
 
